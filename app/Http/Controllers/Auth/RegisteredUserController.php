@@ -28,7 +28,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): RedirectResponse //function ini bertugas untuk menerima request dan masukan ke db
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -41,6 +41,8 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        $user->assignRole('user');// assign role user biasa
 
         event(new Registered($user));
 
